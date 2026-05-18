@@ -13,10 +13,11 @@ export default function Docs() {
   };
 
   const codeSnippets = {
-    health: `curl "http://localhost:8080/api/health"`,
-    search: `curl "http://localhost:8080/api/search?q=Hilton+Hotel&limit=5"`,
+    health:  `curl "http://localhost:8080/api/health"`,
+    search:  `curl "http://localhost:8080/api/search?q=Hilton+Hotel&limit=5"`,
     reverse: `curl "http://localhost:8080/api/reverse?lat=39.7460&lon=-75.5480&limit=5"`,
-    nearest: `curl "http://localhost:8080/api/places/nearest?lat=39.7460&lon=-75.5480&max_distance_m=5000"`
+    nearest: `curl "http://localhost:8080/api/places/nearest?lat=39.7460&lon=-75.5480&max_distance_m=5000"`,
+    placeById: `curl "http://localhost:8080/api/places/overture:place:ac0aed88-e6cb-4224-9520-441339447760"`,
   };
 
   return (
@@ -194,6 +195,151 @@ export default function Docs() {
               </div>
               <pre className="bg-[#0c1017] p-4 rounded-lg border border-white/10 font-mono text-sm mt-4 overflow-x-auto text-green-400">
                 <code>{codeSnippets.reverse}</code>
+              </pre>
+            </div>
+          </div>
+
+          {/* Nearest */}
+          <div className="mt-16 space-y-6">
+            <div className="flex items-center gap-4">
+              <span className="px-3 py-1 bg-primary/20 text-primary rounded font-mono font-bold text-sm">GET</span>
+              <h3 className="text-xl font-mono m-0 text-foreground">/api/places/nearest</h3>
+            </div>
+            <p className="text-muted-foreground">
+              Returns the single closest place to a given coordinate within a configurable radius.
+              Optionally filter by name to find the nearest matching business or landmark.
+            </p>
+
+            <div className="bg-card border border-border rounded-lg p-6">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Query Parameters</h4>
+              <ul className="space-y-3 font-mono text-sm list-none p-0 m-0">
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-36 shrink-0">lat <span className="text-destructive">*</span></span>
+                  <span className="text-muted-foreground flex-1">Latitude (WGS84)</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-36 shrink-0">lon <span className="text-destructive">*</span></span>
+                  <span className="text-muted-foreground flex-1">Longitude (WGS84)</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-36 shrink-0">max_distance_m</span>
+                  <span className="text-muted-foreground flex-1">Search radius in metres. Default: <span className="text-foreground">5000</span></span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-36 shrink-0">name</span>
+                  <span className="text-muted-foreground flex-1">Optional name filter — only return places whose name contains this string</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="relative">
+              <div className="absolute top-4 right-4">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-8 w-8 text-muted-foreground hover:text-primary"
+                  onClick={() => copyToClipboard(codeSnippets.nearest, 'nearest')}
+                >
+                  {copiedId === 'nearest' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                </Button>
+              </div>
+              <pre className="bg-[#0c1017] p-4 rounded-lg border border-white/10 font-mono text-sm mt-4 overflow-x-auto text-green-400">
+                <code>{codeSnippets.nearest}</code>
+              </pre>
+            </div>
+          </div>
+
+          {/* Place by ID */}
+          <div className="mt-16 space-y-6">
+            <div className="flex items-center gap-4">
+              <span className="px-3 py-1 bg-primary/20 text-primary rounded font-mono font-bold text-sm">GET</span>
+              <h3 className="text-xl font-mono m-0 text-foreground">/api/places/:id</h3>
+            </div>
+            <p className="text-muted-foreground">
+              Returns all available Overture Maps data for a single place looked up by its ID.
+              Every search, reverse, and nearest result includes an <code className="text-primary font-mono text-sm">id</code> field —
+              pass it here to retrieve the full detail record.
+            </p>
+
+            <div className="bg-card border border-border rounded-lg p-6">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Path Parameter</h4>
+              <ul className="space-y-3 font-mono text-sm list-none p-0 m-0">
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-16 shrink-0">id <span className="text-destructive">*</span></span>
+                  <span className="text-muted-foreground flex-1">
+                    Overture place identifier in the format <span className="text-foreground">overture:place:&lt;uuid&gt;</span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-card border border-border rounded-lg p-6">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Response fields</h4>
+              <ul className="space-y-3 font-mono text-sm list-none p-0 m-0">
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">id</span>
+                  <span className="text-muted-foreground flex-1">Overture place identifier</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">names</span>
+                  <span className="text-muted-foreground flex-1">Full names object — primary name, common aliases, rules</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">addresses</span>
+                  <span className="text-muted-foreground flex-1">Structured address list — freeform, locality, postcode, region, country</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">location</span>
+                  <span className="text-muted-foreground flex-1">Coordinates object <span className="text-foreground">{"{ lat, lon }"}</span></span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">confidence</span>
+                  <span className="text-muted-foreground flex-1">Data confidence score (0–1)</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">categories</span>
+                  <span className="text-muted-foreground flex-1">Primary and alternate category tags</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">sources</span>
+                  <span className="text-muted-foreground flex-1">Data provenance records — dataset, license, record_id, update_time</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">websites</span>
+                  <span className="text-muted-foreground flex-1">List of website URLs</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">phones</span>
+                  <span className="text-muted-foreground flex-1">List of phone numbers</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">socials</span>
+                  <span className="text-muted-foreground flex-1">List of social media profile URLs</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">emails</span>
+                  <span className="text-muted-foreground flex-1">List of email addresses</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">brand</span>
+                  <span className="text-muted-foreground flex-1">Brand information — name, Wikidata identifier</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="relative">
+              <div className="absolute top-4 right-4">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-8 w-8 text-muted-foreground hover:text-primary"
+                  onClick={() => copyToClipboard(codeSnippets.placeById, 'placeById')}
+                >
+                  {copiedId === 'placeById' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                </Button>
+              </div>
+              <pre className="bg-[#0c1017] p-4 rounded-lg border border-white/10 font-mono text-sm mt-4 overflow-x-auto text-green-400">
+                <code>{codeSnippets.placeById}</code>
               </pre>
             </div>
           </div>
