@@ -29,7 +29,7 @@ export function Navbar() {
             Docs
           </Link>
           <a
-            href="https://github.com"
+            href="https://github.com/fouomene/geodataplacefinder"
             target="_blank"
             rel="noreferrer"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary flex items-center gap-2"
