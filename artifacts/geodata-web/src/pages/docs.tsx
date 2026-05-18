@@ -96,7 +96,7 @@ export default function Docs() {
             <p className="text-muted-foreground">
               Free-form or structured text search against{" "}
               <a href="https://overturemaps.org/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Overture Maps</a>{" "}
-              Places data. Converts place names or addresses into geographic coordinates without relying on Google Maps or Nominatim.
+              Places data. Converts place names or addresses into geographic coordinates.
             </p>
 
             <div className="bg-card border border-border rounded-lg p-6 space-y-6">

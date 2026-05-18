@@ -21,14 +21,13 @@ export default function Home() {
               v0.1.0 Open Source
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-foreground">
-              Geocoding, <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Self-Hosted.</span>
+              Geocoding.
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               An open-source geocoding API that converts addresses into geographic coordinates
               and performs reverse geocoding, using{" "}
               <a href="https://overturemaps.org/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Overture Maps</a>{" "}
-              data queried through DuckDB — without relying on Google Maps or Nominatim.
+              data queried through DuckDB.
             </p>
             <div className="flex items-center justify-center gap-4 pt-4">
               <Button asChild size="lg" className="h-12 px-8 font-mono text-background">
