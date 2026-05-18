@@ -42,11 +42,11 @@ export const getHealthCheckUrl = () => {
 
 
 
-  return `/api/healthz`
+  return `/api/health`
 }
 
 /**
- * Returns server health status
+ * Returns server status, version, and uptime. Also available at /api/healthz for backwards compatibility.
  * @summary Health check
  */
 export const healthCheck = async ( options?: RequestInit): Promise<HealthStatus> => {
@@ -66,7 +66,7 @@ export const healthCheck = async ( options?: RequestInit): Promise<HealthStatus>
 
 export const getHealthCheckQueryKey = () => {
     return [
-    `/api/healthz`
+    `/api/health`
     ] as const;
     }
 
@@ -103,6 +103,84 @@ export function useHealthCheck<TData = Awaited<ReturnType<typeof healthCheck>>, 
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getHealthCheckQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getHealthCheckAliasUrl = () => {
+
+
+
+
+  return `/api/healthz`
+}
+
+/**
+ * Alias for /api/health — kept for backwards compatibility.
+ * @summary Health check (alias)
+ */
+export const healthCheckAlias = async ( options?: RequestInit): Promise<HealthStatus> => {
+
+  return customFetch<HealthStatus>(getHealthCheckAliasUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getHealthCheckAliasQueryKey = () => {
+    return [
+    `/api/healthz`
+    ] as const;
+    }
+
+
+export const getHealthCheckAliasQueryOptions = <TData = Awaited<ReturnType<typeof healthCheckAlias>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof healthCheckAlias>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getHealthCheckAliasQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof healthCheckAlias>>> = ({ signal }) => healthCheckAlias({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof healthCheckAlias>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type HealthCheckAliasQueryResult = NonNullable<Awaited<ReturnType<typeof healthCheckAlias>>>
+export type HealthCheckAliasQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Health check (alias)
+ */
+
+export function useHealthCheckAlias<TData = Awaited<ReturnType<typeof healthCheckAlias>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof healthCheckAlias>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getHealthCheckAliasQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

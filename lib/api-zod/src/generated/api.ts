@@ -9,11 +9,26 @@ import * as zod from 'zod';
 
 
 /**
- * Returns server health status
+ * Returns server status, version, and uptime. Also available at /api/healthz for backwards compatibility.
  * @summary Health check
  */
 export const HealthCheckResponse = zod.object({
-  "status": zod.string()
+  "status": zod.string().describe('Server status (\"ok\")'),
+  "version": zod.string().describe('API version'),
+  "uptime_s": zod.number().describe('Server uptime in seconds'),
+  "cache_rows": zod.number().describe('Number of places loaded in the local DuckDB cache')
+})
+
+
+/**
+ * Alias for /api/health — kept for backwards compatibility.
+ * @summary Health check (alias)
+ */
+export const HealthCheckAliasResponse = zod.object({
+  "status": zod.string().describe('Server status (\"ok\")'),
+  "version": zod.string().describe('API version'),
+  "uptime_s": zod.number().describe('Server uptime in seconds'),
+  "cache_rows": zod.number().describe('Number of places loaded in the local DuckDB cache')
 })
 
 

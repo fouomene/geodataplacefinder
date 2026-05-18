@@ -13,6 +13,7 @@ export default function Docs() {
   };
 
   const codeSnippets = {
+    health: `curl "http://localhost:8080/api/health"`,
     search: `curl "http://localhost:8080/api/search?q=Hilton+Hotel&limit=5"`,
     reverse: `curl "http://localhost:8080/api/reverse?lat=39.7460&lon=-75.5480&limit=5"`,
     nearest: `curl "http://localhost:8080/api/places/nearest?lat=39.7460&lon=-75.5480&max_distance_m=5000"`
@@ -35,6 +36,56 @@ export default function Docs() {
           </pre>
 
           <h2 className="font-mono text-2xl border-b border-border pb-2 text-foreground mt-12">Endpoints</h2>
+
+          {/* Health */}
+          <div className="mt-8 space-y-6">
+            <div className="flex items-center gap-4">
+              <span className="px-3 py-1 bg-primary/20 text-primary rounded font-mono font-bold text-sm">GET</span>
+              <h3 className="text-xl font-mono m-0 text-foreground">/api/health</h3>
+            </div>
+            <p className="text-muted-foreground">
+              Returns the current server status, API version, uptime, and the number of places loaded in the local cache.
+              Useful for readiness checks and monitoring. Also available at <code className="text-primary font-mono text-sm">/api/healthz</code> for backwards compatibility.
+            </p>
+
+            <div className="bg-card border border-border rounded-lg p-6">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Response fields</h4>
+              <ul className="space-y-3 font-mono text-sm list-none p-0 m-0">
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">status</span>
+                  <span className="text-muted-foreground flex-1">Always <span className="text-foreground">"ok"</span> when the server is running</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">version</span>
+                  <span className="text-muted-foreground flex-1">API version string</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">uptime_s</span>
+                  <span className="text-muted-foreground flex-1">Seconds elapsed since the server started</span>
+                </li>
+                <li className="flex gap-4 items-start">
+                  <span className="text-accent w-28 shrink-0">cache_rows</span>
+                  <span className="text-muted-foreground flex-1">Number of place records loaded in the local DuckDB cache (0 if still warming up)</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="relative">
+              <div className="absolute top-4 right-4">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-8 w-8 text-muted-foreground hover:text-primary"
+                  onClick={() => copyToClipboard(codeSnippets.health, 'health')}
+                >
+                  {copiedId === 'health' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                </Button>
+              </div>
+              <pre className="bg-[#0c1017] p-4 rounded-lg border border-white/10 font-mono text-sm mt-4 overflow-x-auto text-green-400">
+                <code>{codeSnippets.health}</code>
+              </pre>
+            </div>
+          </div>
 
           {/* Search */}
           <div className="mt-8 space-y-6">

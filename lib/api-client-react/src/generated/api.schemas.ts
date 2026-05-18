@@ -6,7 +6,14 @@
  * OpenAPI spec version: 0.1.0
  */
 export interface HealthStatus {
+  /** Server status ("ok") */
   status: string;
+  /** API version */
+  version: string;
+  /** Server uptime in seconds */
+  uptime_s: number;
+  /** Number of places loaded in the local DuckDB cache */
+  cache_rows: number;
 }
 
 export interface Place {

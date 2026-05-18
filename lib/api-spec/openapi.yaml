@@ -13,12 +13,26 @@ tags:
   - name: geocoding
     description: Geocoding and reverse geocoding endpoints
 paths:
-  /healthz:
+  /health:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
+      description: Returns server status, version, and uptime. Also available at /api/healthz for backwards compatibility.
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /healthz:
+    get:
+      operationId: healthCheckAlias
+      tags: [health]
+      summary: Health check (alias)
+      description: Alias for /api/health — kept for backwards compatibility.
       responses:
         "200":
           description: Healthy
@@ -220,8 +234,22 @@ components:
       properties:
         status:
           type: string
+          description: Server status ("ok")
+        version:
+          type: string
+          description: API version
+        uptime_s:
+          type: number
+          format: double
+          description: Server uptime in seconds
+        cache_rows:
+          type: integer
+          description: Number of places loaded in the local DuckDB cache
       required:
         - status
+        - version
+        - uptime_s
+        - cache_rows
 
     Place:
       type: object
