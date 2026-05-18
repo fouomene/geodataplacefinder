@@ -13,9 +13,9 @@ export default function Docs() {
   };
 
   const codeSnippets = {
-    search: `curl "http://localhost:3000/api/search?q=Cafe+Paris&limit=5"`,
-    reverse: `curl "http://localhost:3000/api/reverse?lat=48.8566&lon=2.3522"`,
-    nearest: `curl "http://localhost:3000/api/places/nearest?lat=48.8566&lon=2.3522&name=cafe"`
+    search: `curl "http://localhost:8080/api/search?q=Hilton+Hotel&limit=5"`,
+    reverse: `curl "http://localhost:8080/api/reverse?lat=39.7460&lon=-75.5480&limit=5"`,
+    nearest: `curl "http://localhost:8080/api/places/nearest?lat=39.7460&lon=-75.5480&max_distance_m=5000"`
   };
 
   return (

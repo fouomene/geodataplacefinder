@@ -17,18 +17,18 @@ export function ApiDemo() {
   const [activeTab, setActiveTab] = useState("search");
 
   // Search state
-  const [searchQuery, setSearchQuery] = useState("Cafe Paris New York");
+  const [searchQuery, setSearchQuery] = useState("Hilton Hotel");
   const [activeSearch, setActiveSearch] = useState("");
 
-  // Reverse state
-  const [lat, setLat] = useState("40.7128");
-  const [lon, setLon] = useState("-74.0060");
+  // Reverse state — Wilmington, DE (Hotel du Pont area)
+  const [lat, setLat] = useState("39.7460");
+  const [lon, setLon] = useState("-75.5480");
   const [activeReverse, setActiveReverse] = useState({ lat: "", lon: "" });
 
-  // Nearest state
-  const [nearLat, setNearLat] = useState("40.7128");
-  const [nearLon, setNearLon] = useState("-74.0060");
-  const [nearName, setNearName] = useState("cafe");
+  // Nearest state — same area
+  const [nearLat, setNearLat] = useState("39.7460");
+  const [nearLon, setNearLon] = useState("-75.5480");
+  const [nearName, setNearName] = useState("");
   const [activeNearest, setActiveNearest] = useState({ lat: "", lon: "", name: "" });
 
   const searchParams = { q: activeSearch, limit: 5 };
@@ -125,7 +125,7 @@ export function ApiDemo() {
                       id="q"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="e.g. Cafe Paris New York"
+                      placeholder='e.g. "Hilton Hotel" or "cafe"'
                       className="font-mono"
                       data-testid="input-search-q"
                     />
