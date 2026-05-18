@@ -83,28 +83,28 @@ export function ApiDemo() {
   const renderResponse = (data: any, isLoading: boolean, error: any) => {
     if (isLoading) {
       return (
-        <div className="flex items-center justify-center h-48 text-primary">
+        <div className="flex items-center justify-center h-48 text-green-400">
           <Loader2 className="h-8 w-8 animate-spin" />
         </div>
       );
     }
     if (error) {
       return (
-        <div className="p-4 text-destructive bg-destructive/10 rounded font-mono text-sm">
+        <div className="p-4 text-red-400 bg-red-950/40 rounded font-mono text-sm">
           Error: {error?.error || "Failed to fetch data"}
         </div>
       );
     }
     if (!data) {
       return (
-        <div className="flex items-center justify-center h-48 text-muted-foreground/50 font-mono text-sm">
+        <div className="flex items-center justify-center h-48 text-slate-600 font-mono text-sm">
           // Awaiting query...
         </div>
       );
     }
 
     return (
-      <pre className="p-4 rounded bg-black/50 overflow-x-auto border border-border/50 text-sm font-mono text-green-400">
+      <pre className="p-4 rounded bg-slate-950 overflow-x-auto border border-slate-800 text-sm font-mono text-green-400">
         <code>{JSON.stringify(data, null, 2)}</code>
       </pre>
     );
@@ -222,15 +222,15 @@ export function ApiDemo() {
         </div>
 
         {/* Output Panel */}
-        <div className="p-6 bg-[#0c1017] flex flex-col">
-          <div className="text-xs font-mono text-muted-foreground mb-4 flex justify-between">
+        <div className="p-6 bg-slate-950 flex flex-col">
+          <div className="text-xs font-mono text-slate-400 mb-4 flex justify-between">
             <span>Response</span>
-            {activeTab === 'search'  && searchData  && <span className="text-primary">{searchData.length} results</span>}
-            {activeTab === 'reverse' && reverseData  && <span className="text-primary">{reverseData.length} results</span>}
-            {activeTab === 'nearest' && nearestData  && <span className="text-primary">Found match</span>}
-            {activeTab === 'place'   && placeData    && <span className="text-primary">1 result</span>}
+            {activeTab === 'search'  && searchData  && <span className="text-green-400">{searchData.length} results</span>}
+            {activeTab === 'reverse' && reverseData  && <span className="text-green-400">{reverseData.length} results</span>}
+            {activeTab === 'nearest' && nearestData  && <span className="text-green-400">Found match</span>}
+            {activeTab === 'place'   && placeData    && <span className="text-green-400">1 result</span>}
           </div>
-          <div className="flex-1 overflow-auto rounded border border-white/5 bg-black/40">
+          <div className="flex-1 overflow-auto rounded border border-slate-800 bg-slate-900/60">
             {activeTab === "search"  && renderResponse(searchData,  searchLoading,  searchError)}
             {activeTab === "reverse" && renderResponse(reverseData,  reverseLoading, reverseError)}
             {activeTab === "nearest" && renderResponse(nearestData,  nearestLoading, nearestError)}
