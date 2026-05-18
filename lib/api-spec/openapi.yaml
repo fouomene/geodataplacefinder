@@ -3,13 +3,15 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: GeoDataPlacefinder API — open-source geocoding powered by Overture Maps and DuckDB
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: geocoding
+    description: Geocoding and reverse geocoding endpoints
 paths:
   /healthz:
     get:
@@ -24,6 +26,193 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /search:
+    get:
+      operationId: searchPlaces
+      tags: [geocoding]
+      summary: Geocoding — search places by text
+      description: |
+        Free-form or structured text search against Overture Maps Places dataset.
+        Converts place names or addresses into geographic coordinates.
+      parameters:
+        - name: q
+          in: query
+          description: Free-form search query (e.g. "Cafe Paris New York")
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Place name filter
+          required: false
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: City filter for structured queries
+          required: false
+          schema:
+            type: string
+        - name: postcode
+          in: query
+          description: Postcode filter for structured queries
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Place category/type filter (e.g. "cafe", "restaurant")
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of results (1-20)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 20
+            default: 5
+      responses:
+        "200":
+          description: List of matching places
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Place"
+        "400":
+          description: Missing required query parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /reverse:
+    get:
+      operationId: reversePlaces
+      tags: [geocoding]
+      summary: Reverse geocoding — coordinates to address
+      description: |
+        Converts geographic coordinates (latitude/longitude) into the nearest
+        human-readable place name and address from Overture Maps.
+      parameters:
+        - name: lat
+          in: query
+          description: Latitude (WGS84)
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: lon
+          in: query
+          description: Longitude (WGS84)
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: limit
+          in: query
+          description: Maximum number of results (1-20)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 20
+            default: 5
+      responses:
+        "200":
+          description: List of nearby places with distance
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlaceWithDistance"
+        "400":
+          description: Missing or invalid lat/lon parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /places/nearest:
+    get:
+      operationId: nearestPlaces
+      tags: [geocoding]
+      summary: Find nearest place to coordinates
+      description: |
+        Returns the single nearest place to given coordinates, optionally filtered by name.
+        Useful for point-of-interest lookup and proximity search.
+      parameters:
+        - name: lat
+          in: query
+          description: Latitude (WGS84)
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: lon
+          in: query
+          description: Longitude (WGS84)
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: name
+          in: query
+          description: Optional place name filter
+          required: false
+          schema:
+            type: string
+        - name: max_distance_m
+          in: query
+          description: Maximum search radius in metres
+          required: false
+          schema:
+            type: integer
+            default: 5000
+      responses:
+        "200":
+          description: Nearest place found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaceWithDistance"
+        "404":
+          description: No place found within the specified radius
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Missing or invalid lat/lon parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +223,56 @@ components:
       required:
         - status
 
+    Place:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Primary place name
+          nullable: true
+        address:
+          type: string
+          description: Freeform address string
+          nullable: true
+        lat:
+          type: number
+          format: double
+          description: Latitude (WGS84)
+        lon:
+          type: number
+          format: double
+          description: Longitude (WGS84)
+        confidence:
+          type: number
+          format: double
+          description: Data confidence score (0-1)
+          nullable: true
+        categories:
+          type: array
+          items:
+            type: string
+          description: Place category tags
+          nullable: true
+      required:
+        - lat
+        - lon
+
+    PlaceWithDistance:
+      allOf:
+        - $ref: "#/components/schemas/Place"
+        - type: object
+          properties:
+            distance_m:
+              type: number
+              format: double
+              description: Distance from query coordinates in metres
+          required:
+            - distance_m
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
