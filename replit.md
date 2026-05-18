@@ -54,10 +54,13 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-- DuckDB queries against remote Parquet files are slow on first call (cold start) — DuckDB must fetch data over HTTPS from Overture Maps CDN
-- The spatial extension must be loaded before any `ST_*` functions can be used
-- Always add DuckDB to `onlyBuiltDependencies` in `pnpm-workspace.yaml` — without it, `pnpm install` skips the native binary compilation
-- After any OpenAPI spec change, run `pnpm --filter @workspace/api-spec run codegen` before using the updated types
+- On first server start, DuckDB populates a local `data/places.duckdb` cache by fetching 10,000 rows from each of 5 S3 files (~50k rows total). This takes ~15s and only happens once — subsequent restarts load the cached file instantly.
+- The `data/` directory is gitignored — the cache is rebuilt from S3 on fresh clones/deploys.
+- The local cache is a sample (~50k rows), so very specific or obscure place names may not be in it. For full coverage, point `SAMPLE_FILES` in `duckdb.ts` at all 16 S3 parquet files with higher `ROWS_PER_FILE`.
+- The spatial extension must be loaded before any `ST_*` functions can be used.
+- Always add DuckDB to `onlyBuiltDependencies` in `pnpm-workspace.yaml` — without it, `pnpm install` skips the native binary compilation.
+- After any OpenAPI spec change, run `pnpm --filter @workspace/api-spec run codegen` before using the updated types.
+- `categories.primary` in Overture Maps data is a single `VARCHAR`, not an array — use `list_value(categories.primary)` to cast it to `TEXT[]`.
 
 ## Pointers
 
