@@ -7,6 +7,8 @@
  */
 
 export interface Place {
+  /** Overture Maps place identifier (e.g. "overture:place:abc123") */
+  id?: string | null;
   /** Primary place name */
   name?: string | null;
   /** Freeform address string */

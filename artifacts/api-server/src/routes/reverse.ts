@@ -17,6 +17,7 @@ router.get("/reverse", async (req: Request, res: Response) => {
 
   const query = `
     SELECT
+      id,
       name,
       address,
       lat,
@@ -46,6 +47,7 @@ router.get("/reverse", async (req: Request, res: Response) => {
 
       res.json(
         (rows ?? []).map((r) => ({
+          id: r.id ?? null,
           name: r.name ?? null,
           address: r.address ?? null,
           lat: r.lat,

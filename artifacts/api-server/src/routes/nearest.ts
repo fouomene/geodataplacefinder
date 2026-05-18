@@ -25,6 +25,7 @@ router.get("/places/nearest", async (req: Request, res: Response) => {
 
   const query = `
     SELECT
+      p.id,
       p.name,
       p.address,
       p.lat,
@@ -64,6 +65,7 @@ router.get("/places/nearest", async (req: Request, res: Response) => {
 
       const r = rows[0];
       res.json({
+        id: r.id ?? null,
         name: r.name ?? null,
         address: r.address ?? null,
         lat: r.lat,

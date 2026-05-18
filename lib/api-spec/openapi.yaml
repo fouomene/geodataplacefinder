@@ -254,6 +254,10 @@ components:
     Place:
       type: object
       properties:
+        id:
+          type: string
+          description: Overture Maps place identifier (e.g. "overture:place:abc123")
+          nullable: true
         name:
           type: string
           description: Primary place name

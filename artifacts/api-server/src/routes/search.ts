@@ -60,7 +60,7 @@ router.get("/search", async (req: Request, res: Response) => {
 
   params.push(limit);
   const query = `
-    SELECT name, address, lat, lon, confidence, categories
+    SELECT id, name, address, lat, lon, confidence, categories
     FROM places
     ${whereClause}
     ORDER BY confidence DESC NULLS LAST
@@ -79,6 +79,7 @@ router.get("/search", async (req: Request, res: Response) => {
 
       res.json(
         (rows ?? []).map((r) => ({
+          id: r.id ?? null,
           name: r.name ?? null,
           address: r.address ?? null,
           lat: r.lat,

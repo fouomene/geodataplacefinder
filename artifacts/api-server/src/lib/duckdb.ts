@@ -60,10 +60,11 @@ async function populateFromS3(con: duckdb.Connection): Promise<void> {
   await runAsync(
     con,
     `CREATE TABLE IF NOT EXISTS places (
-      name      TEXT,
-      address   TEXT,
-      lat       DOUBLE,
-      lon       DOUBLE,
+      id         TEXT,
+      name       TEXT,
+      address    TEXT,
+      lat        DOUBLE,
+      lon        DOUBLE,
       confidence DOUBLE,
       categories TEXT[]
     )`,
@@ -78,6 +79,7 @@ async function populateFromS3(con: duckdb.Connection): Promise<void> {
       con,
       `INSERT INTO places
        SELECT
+         'overture:place:' || id      AS id,
          names.primary                AS name,
          addresses[1].freeform        AS address,
          ST_Y(geometry)               AS lat,

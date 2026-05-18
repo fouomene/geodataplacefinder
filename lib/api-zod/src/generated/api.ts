@@ -53,6 +53,7 @@ export const SearchPlacesQueryParams = zod.object({
 })
 
 export const SearchPlacesResponseItem = zod.object({
+  "id": zod.string().nullish().describe('Overture Maps place identifier (e.g. \"overture:place:abc123\")'),
   "name": zod.string().nullish().describe('Primary place name'),
   "address": zod.string().nullish().describe('Freeform address string'),
   "lat": zod.number().describe('Latitude (WGS84)'),
@@ -81,6 +82,7 @@ export const ReversePlacesQueryParams = zod.object({
 })
 
 export const ReversePlacesResponseItem = zod.object({
+  "id": zod.string().nullish().describe('Overture Maps place identifier (e.g. \"overture:place:abc123\")'),
   "name": zod.string().nullish().describe('Primary place name'),
   "address": zod.string().nullish().describe('Freeform address string'),
   "lat": zod.number().describe('Latitude (WGS84)'),
@@ -109,6 +111,7 @@ export const NearestPlacesQueryParams = zod.object({
 })
 
 export const NearestPlacesResponse = zod.object({
+  "id": zod.string().nullish().describe('Overture Maps place identifier (e.g. \"overture:place:abc123\")'),
   "name": zod.string().nullish().describe('Primary place name'),
   "address": zod.string().nullish().describe('Freeform address string'),
   "lat": zod.number().describe('Latitude (WGS84)'),
