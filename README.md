@@ -30,13 +30,13 @@ Full API reference is available on the live demo site at `/docs`, or read the so
 
 ```bash
 # Geocode by name
-curl "http://localhost:8080/api/search?q=Eiffel+Tower"
+curl "https://geodataplacefinder.org/api/search?q=Eiffel+Tower"
 
 # Reverse geocode
-curl "http://localhost:8080/api/reverse?lat=48.8584&lon=2.2945"
+curl "https://geodataplacefinder.org/api/reverse?lat=48.8584&lon=2.2945"
 
 # Nearest place within 500 m
-curl "http://localhost:8080/api/places/nearest?lat=48.8584&lon=2.2945&max_distance_m=500"
+curl "https://geodataplacefinder.org/api/places/nearest?lat=48.8584&lon=2.2945&max_distance_m=500"
 ```
 
 ---
@@ -59,7 +59,7 @@ cd geodataplacefinder
 docker compose up --build
 ```
 
-The API server is available at `http://localhost:8080` and the demo site at `http://localhost:3000`.
+The API server is available at `http://localhost:8080` and the demo site at `http://localhost:3000`. The production deployment is at `https://geodataplacefinder.org`.
 
 > **Note:** On first start DuckDB fetches ~50 000 place records from Overture Maps S3 (~15 s). Subsequent restarts load the local cache instantly from `data/places.duckdb`.
 

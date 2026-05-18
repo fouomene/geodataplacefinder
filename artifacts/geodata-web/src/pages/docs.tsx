@@ -13,11 +13,11 @@ export default function Docs() {
   };
 
   const codeSnippets = {
-    health:  `curl "http://localhost:8080/api/health"`,
-    search:  `curl "http://localhost:8080/api/search?q=Hilton+Hotel&limit=5"`,
-    reverse: `curl "http://localhost:8080/api/reverse?lat=39.7460&lon=-75.5480&limit=5"`,
-    nearest: `curl "http://localhost:8080/api/places/nearest?lat=39.7460&lon=-75.5480&max_distance_m=5000"`,
-    placeById: `curl "http://localhost:8080/api/places/overture:place:ac0aed88-e6cb-4224-9520-441339447760"`,
+    health:  `curl "https://geodataplacefinder.org/api/health"`,
+    search:  `curl "https://geodataplacefinder.org/api/search?q=Hilton+Hotel&limit=5"`,
+    reverse: `curl "https://geodataplacefinder.org/api/reverse?lat=39.7460&lon=-75.5480&limit=5"`,
+    nearest: `curl "https://geodataplacefinder.org/api/places/nearest?lat=39.7460&lon=-75.5480&max_distance_m=5000"`,
+    placeById: `curl "https://geodataplacefinder.org/api/places/overture:place:ac0aed88-e6cb-4224-9520-441339447760"`,
   };
 
   return (
@@ -33,7 +33,7 @@ export default function Docs() {
         <div className="prose prose-invert prose-emerald max-w-none">
           <h2 className="font-mono text-2xl border-b border-border pb-2 text-foreground">Base URL</h2>
           <pre className="bg-card p-4 rounded-lg border border-border text-primary font-mono text-sm">
-            <code>http://localhost:3000</code>
+            <code>https://geodataplacefinder.org</code>
           </pre>
 
           <h2 className="font-mono text-2xl border-b border-border pb-2 text-foreground mt-12">Endpoints</h2>
