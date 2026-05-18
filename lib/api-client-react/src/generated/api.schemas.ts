@@ -16,6 +16,54 @@ export interface HealthStatus {
   cache_rows: number;
 }
 
+/**
+ * Full names object from Overture Maps (primary, common, rules)
+ */
+export type PlaceDetailNames = { [key: string]: unknown } | null;
+
+export type PlaceDetailAddressesItem = { [key: string]: unknown };
+
+/**
+ * Geographic coordinates
+ */
+export type PlaceDetailLocation = {
+  lat: number;
+  lon: number;
+};
+
+export type PlaceDetailCategories = {
+  primary?: string | null;
+  alternate?: string[] | null;
+} | null;
+
+export type PlaceDetailSourcesItem = { [key: string]: unknown };
+
+/**
+ * Brand information (names, wikidata)
+ */
+export type PlaceDetailBrand = { [key: string]: unknown } | null;
+
+export interface PlaceDetail {
+  /** Overture Maps place identifier */
+  id: string;
+  /** Full names object from Overture Maps (primary, common, rules) */
+  names?: PlaceDetailNames;
+  /** Full address list from Overture Maps */
+  addresses?: PlaceDetailAddressesItem[] | null;
+  /** Geographic coordinates */
+  location: PlaceDetailLocation;
+  confidence?: number | null;
+  categories?: PlaceDetailCategories;
+  /** Data source provenance records */
+  sources?: PlaceDetailSourcesItem[] | null;
+  websites?: string[] | null;
+  phones?: string[] | null;
+  socials?: string[] | null;
+  emails?: string[] | null;
+  /** Brand information (names, wikidata) */
+  brand?: PlaceDetailBrand;
+}
+
 export interface Place {
   /** Overture Maps place identifier (e.g. "overture:place:abc123") */
   id?: string | null;

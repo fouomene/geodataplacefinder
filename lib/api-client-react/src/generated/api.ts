@@ -20,6 +20,7 @@ import type {
   HealthStatus,
   NearestPlacesParams,
   Place,
+  PlaceDetail,
   PlaceWithDistance,
   ReversePlacesParams,
   SearchPlacesParams
@@ -355,6 +356,87 @@ export function useReversePlaces<TData = Awaited<ReturnType<typeof reversePlaces
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getReversePlacesQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getGetPlaceByIdUrl = (id: string,) => {
+
+
+
+
+  return `/api/places/${id}`
+}
+
+/**
+ * Returns all available Overture Maps data for a single place, looked up by its
+Overture place ID (e.g. `overture:place:abc123`). The ID is returned by all
+other geocoding endpoints.
+
+ * @summary Get full place details by ID
+ */
+export const getPlaceById = async (id: string, options?: RequestInit): Promise<PlaceDetail> => {
+
+  return customFetch<PlaceDetail>(getGetPlaceByIdUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetPlaceByIdQueryKey = (id: string,) => {
+    return [
+    `/api/places/${id}`
+    ] as const;
+    }
+
+
+export const getGetPlaceByIdQueryOptions = <TData = Awaited<ReturnType<typeof getPlaceById>>, TError = ErrorType<ErrorResponse>>(id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPlaceById>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPlaceByIdQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPlaceById>>> = ({ signal }) => getPlaceById(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPlaceById>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetPlaceByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getPlaceById>>>
+export type GetPlaceByIdQueryError = ErrorType<ErrorResponse>
+
+
+/**
+ * @summary Get full place details by ID
+ */
+
+export function useGetPlaceById<TData = Awaited<ReturnType<typeof getPlaceById>>, TError = ErrorType<ErrorResponse>>(
+ id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPlaceById>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetPlaceByIdQueryOptions(id,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

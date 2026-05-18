@@ -165,6 +165,48 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /places/{id}:
+    get:
+      operationId: getPlaceById
+      tags: [geocoding]
+      summary: Get full place details by ID
+      description: |
+        Returns all available Overture Maps data for a single place, looked up by its
+        Overture place ID (e.g. `overture:place:abc123`). The ID is returned by all
+        other geocoding endpoints.
+      parameters:
+        - name: id
+          in: path
+          description: Overture place ID (overture:place:<uuid>)
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Full place detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaceDetail"
+        "400":
+          description: Invalid place ID format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Place not found in cache
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /places/nearest:
     get:
       operationId: nearestPlaces
@@ -250,6 +292,87 @@ components:
         - version
         - uptime_s
         - cache_rows
+
+    PlaceDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Overture Maps place identifier
+        names:
+          type: object
+          nullable: true
+          description: Full names object from Overture Maps (primary, common, rules)
+          additionalProperties: true
+        addresses:
+          type: array
+          nullable: true
+          description: Full address list from Overture Maps
+          items:
+            type: object
+            additionalProperties: true
+        location:
+          type: object
+          description: Geographic coordinates
+          properties:
+            lat:
+              type: number
+              format: double
+            lon:
+              type: number
+              format: double
+          required: [lat, lon]
+        confidence:
+          type: number
+          format: double
+          nullable: true
+        categories:
+          type: object
+          nullable: true
+          properties:
+            primary:
+              type: string
+              nullable: true
+            alternate:
+              type: array
+              nullable: true
+              items:
+                type: string
+        sources:
+          type: array
+          nullable: true
+          description: Data source provenance records
+          items:
+            type: object
+            additionalProperties: true
+        websites:
+          type: array
+          nullable: true
+          items:
+            type: string
+        phones:
+          type: array
+          nullable: true
+          items:
+            type: string
+        socials:
+          type: array
+          nullable: true
+          items:
+            type: string
+        emails:
+          type: array
+          nullable: true
+          items:
+            type: string
+        brand:
+          type: object
+          nullable: true
+          description: Brand information (names, wikidata)
+          additionalProperties: true
+      required:
+        - id
+        - location
 
     Place:
       type: object

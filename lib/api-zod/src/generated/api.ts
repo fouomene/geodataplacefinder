@@ -96,6 +96,39 @@ export const ReversePlacesResponse = zod.array(ReversePlacesResponseItem)
 
 
 /**
+ * Returns all available Overture Maps data for a single place, looked up by its
+Overture place ID (e.g. `overture:place:abc123`). The ID is returned by all
+other geocoding endpoints.
+
+ * @summary Get full place details by ID
+ */
+export const GetPlaceByIdParams = zod.object({
+  "id": zod.coerce.string().describe('Overture place ID (overture:place:<uuid>)')
+})
+
+export const GetPlaceByIdResponse = zod.object({
+  "id": zod.string().describe('Overture Maps place identifier'),
+  "names": zod.record(zod.string(), zod.unknown()).nullish().describe('Full names object from Overture Maps (primary, common, rules)'),
+  "addresses": zod.array(zod.record(zod.string(), zod.unknown())).nullish().describe('Full address list from Overture Maps'),
+  "location": zod.object({
+  "lat": zod.number(),
+  "lon": zod.number()
+}).describe('Geographic coordinates'),
+  "confidence": zod.number().nullish(),
+  "categories": zod.object({
+  "primary": zod.string().nullish(),
+  "alternate": zod.array(zod.string()).nullish()
+}).nullish(),
+  "sources": zod.array(zod.record(zod.string(), zod.unknown())).nullish().describe('Data source provenance records'),
+  "websites": zod.array(zod.string()).nullish(),
+  "phones": zod.array(zod.string()).nullish(),
+  "socials": zod.array(zod.string()).nullish(),
+  "emails": zod.array(zod.string()).nullish(),
+  "brand": zod.record(zod.string(), zod.unknown()).nullish().describe('Brand information (names, wikidata)')
+})
+
+
+/**
  * Returns the single nearest place to given coordinates, optionally filtered by name.
 Useful for point-of-interest lookup and proximity search.
 

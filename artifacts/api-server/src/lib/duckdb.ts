@@ -60,13 +60,22 @@ async function populateFromS3(con: duckdb.Connection): Promise<void> {
   await runAsync(
     con,
     `CREATE TABLE IF NOT EXISTS places (
-      id         TEXT,
-      name       TEXT,
-      address    TEXT,
-      lat        DOUBLE,
-      lon        DOUBLE,
-      confidence DOUBLE,
-      categories TEXT[]
+      id                   TEXT,
+      name                 TEXT,
+      address              TEXT,
+      lat                  DOUBLE,
+      lon                  DOUBLE,
+      confidence           DOUBLE,
+      categories           TEXT[],
+      names_json           TEXT,
+      addresses_json       TEXT,
+      categories_alternate TEXT[],
+      sources_json         TEXT,
+      websites             TEXT[],
+      phones               TEXT[],
+      socials              TEXT[],
+      emails               TEXT[],
+      brand_json           TEXT
     )`,
   );
 
@@ -79,15 +88,26 @@ async function populateFromS3(con: duckdb.Connection): Promise<void> {
       con,
       `INSERT INTO places
        SELECT
-         'overture:place:' || id      AS id,
-         names.primary                AS name,
-         addresses[1].freeform        AS address,
-         ST_Y(geometry)               AS lat,
-         ST_X(geometry)               AS lon,
+         'overture:place:' || id               AS id,
+         names.primary                         AS name,
+         addresses[1].freeform                 AS address,
+         ST_Y(geometry)                        AS lat,
+         ST_X(geometry)                        AS lon,
          confidence,
          CASE WHEN categories.primary IS NOT NULL
               THEN list_value(categories.primary)
-              ELSE NULL END            AS categories
+              ELSE NULL END                    AS categories,
+         CAST(to_json(names)    AS TEXT)       AS names_json,
+         CAST(to_json(addresses) AS TEXT)      AS addresses_json,
+         categories.alternate                  AS categories_alternate,
+         CAST(to_json(sources)  AS TEXT)       AS sources_json,
+         websites,
+         phones,
+         socials,
+         emails,
+         CASE WHEN brand IS NOT NULL
+              THEN CAST(to_json(brand) AS TEXT)
+              ELSE NULL END                    AS brand_json
        FROM read_parquet('${file}')
        WHERE names.primary IS NOT NULL
        LIMIT ${ROWS_PER_FILE}`,
