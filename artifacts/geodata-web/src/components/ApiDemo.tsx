@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, MapPin, Target, Send, Loader2 } from "lucide-react";
+import { Search, MapPin, Target, Send, Loader2, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,9 +8,11 @@ import {
   useSearchPlaces,
   useReversePlaces,
   useNearestPlaces,
+  useGetPlaceById,
   getSearchPlacesQueryKey,
   getReversePlacesQueryKey,
   getNearestPlacesQueryKey,
+  getGetPlaceByIdQueryKey,
 } from "@workspace/api-client-react";
 
 export function ApiDemo() {
@@ -31,6 +33,10 @@ export function ApiDemo() {
   const [nearName, setNearName] = useState("");
   const [activeNearest, setActiveNearest] = useState({ lat: "", lon: "", name: "" });
 
+  // Place detail state
+  const [placeId, setPlaceId] = useState("overture:place:ac0aed88-e6cb-4224-9520-441339447760");
+  const [activePlaceId, setActivePlaceId] = useState("");
+
   const searchParams = { q: activeSearch, limit: 5 };
   const { data: searchData, isLoading: searchLoading, error: searchError } = useSearchPlaces(
     searchParams,
@@ -49,6 +55,11 @@ export function ApiDemo() {
     { query: { enabled: !!activeNearest.lat && !!activeNearest.lon, queryKey: getNearestPlacesQueryKey(nearestParams) } }
   );
 
+  const { data: placeData, isLoading: placeLoading, error: placeError } = useGetPlaceById(
+    activePlaceId,
+    { query: { enabled: !!activePlaceId, queryKey: getGetPlaceByIdQueryKey(activePlaceId) } }
+  );
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setActiveSearch(searchQuery);
@@ -62,6 +73,11 @@ export function ApiDemo() {
   const handleNearestSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setActiveNearest({ lat: nearLat, lon: nearLon, name: nearName });
+  };
+
+  const handlePlaceSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setActivePlaceId(placeId.trim());
   };
 
   const renderResponse = (data: any, isLoading: boolean, error: any) => {
@@ -109,10 +125,11 @@ export function ApiDemo() {
         {/* Input Panel */}
         <div className="p-6 border-r border-border bg-card">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6 bg-background">
-              <TabsTrigger value="search" className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary" data-testid="tab-search">Search</TabsTrigger>
-              <TabsTrigger value="reverse" className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary" data-testid="tab-reverse">Reverse</TabsTrigger>
-              <TabsTrigger value="nearest" className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary" data-testid="tab-nearest">Nearest</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4 mb-6 bg-background">
+              <TabsTrigger value="search"  className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary text-xs" data-testid="tab-search">Search</TabsTrigger>
+              <TabsTrigger value="reverse" className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary text-xs" data-testid="tab-reverse">Reverse</TabsTrigger>
+              <TabsTrigger value="nearest" className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary text-xs" data-testid="tab-nearest">Nearest</TabsTrigger>
+              <TabsTrigger value="place"   className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary text-xs" data-testid="tab-place">By ID</TabsTrigger>
             </TabsList>
 
             <TabsContent value="search" className="space-y-4">
@@ -178,6 +195,29 @@ export function ApiDemo() {
                 </Button>
               </form>
             </TabsContent>
+
+            <TabsContent value="place" className="space-y-4">
+              <div className="text-sm text-muted-foreground mb-4 font-mono">GET /api/places/:id</div>
+              <form onSubmit={handlePlaceSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="placeId">Place ID</Label>
+                  <Input
+                    id="placeId"
+                    value={placeId}
+                    onChange={(e) => setPlaceId(e.target.value)}
+                    placeholder="overture:place:..."
+                    className="font-mono text-xs"
+                    data-testid="input-place-id"
+                  />
+                  <p className="text-xs text-muted-foreground/70 font-mono">
+                    Copy an <span className="text-primary">id</span> from any search result above.
+                  </p>
+                </div>
+                <Button type="submit" className="w-full" data-testid="btn-place-submit">
+                  <Send className="w-4 h-4 mr-2" /> Execute Request
+                </Button>
+              </form>
+            </TabsContent>
           </Tabs>
         </div>
 
@@ -185,14 +225,16 @@ export function ApiDemo() {
         <div className="p-6 bg-[#0c1017] flex flex-col">
           <div className="text-xs font-mono text-muted-foreground mb-4 flex justify-between">
             <span>Response</span>
-            {activeTab === 'search' && searchData && <span className="text-primary">{searchData.length} results</span>}
-            {activeTab === 'reverse' && reverseData && <span className="text-primary">{reverseData.length} results</span>}
-            {activeTab === 'nearest' && nearestData && <span className="text-primary">Found match</span>}
+            {activeTab === 'search'  && searchData  && <span className="text-primary">{searchData.length} results</span>}
+            {activeTab === 'reverse' && reverseData  && <span className="text-primary">{reverseData.length} results</span>}
+            {activeTab === 'nearest' && nearestData  && <span className="text-primary">Found match</span>}
+            {activeTab === 'place'   && placeData    && <span className="text-primary">1 result</span>}
           </div>
           <div className="flex-1 overflow-auto rounded border border-white/5 bg-black/40">
-            {activeTab === "search" && renderResponse(searchData, searchLoading, searchError)}
-            {activeTab === "reverse" && renderResponse(reverseData, reverseLoading, reverseError)}
-            {activeTab === "nearest" && renderResponse(nearestData, nearestLoading, nearestError)}
+            {activeTab === "search"  && renderResponse(searchData,  searchLoading,  searchError)}
+            {activeTab === "reverse" && renderResponse(reverseData,  reverseLoading, reverseError)}
+            {activeTab === "nearest" && renderResponse(nearestData,  nearestLoading, nearestError)}
+            {activeTab === "place"   && renderResponse(placeData,    placeLoading,   placeError)}
           </div>
         </div>
       </div>
