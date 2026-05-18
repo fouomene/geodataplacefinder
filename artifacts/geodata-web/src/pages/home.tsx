@@ -21,7 +21,7 @@ export default function Home() {
               v0.1.0 Open Source
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-foreground">
-              Geocoding.
+              GeoData Placefinder
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               An open-source geocoding API that converts addresses into geographic coordinates
