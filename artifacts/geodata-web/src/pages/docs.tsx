@@ -42,24 +42,53 @@ export default function Docs() {
               <span className="px-3 py-1 bg-primary/20 text-primary rounded font-mono font-bold text-sm">GET</span>
               <h3 className="text-xl font-mono m-0 text-foreground">/api/search</h3>
             </div>
-            <p className="text-muted-foreground">Free-form or structured text search against Overture Maps Places dataset. Converts place names or addresses into geographic coordinates.</p>
-            
-            <div className="bg-card border border-border rounded-lg p-6">
-              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Query Parameters</h4>
-              <ul className="space-y-3 font-mono text-sm list-none p-0 m-0">
-                <li className="flex gap-4 items-start">
-                  <span className="text-accent w-24">q</span>
-                  <span className="text-muted-foreground flex-1">Free-form search query (e.g. "Cafe Paris New York")</span>
-                </li>
-                <li className="flex gap-4 items-start">
-                  <span className="text-accent w-24">limit</span>
-                  <span className="text-muted-foreground flex-1">Maximum results (1-20). Default: 10</span>
-                </li>
-                <li className="flex gap-4 items-start">
-                  <span className="text-accent w-24">city</span>
-                  <span className="text-muted-foreground flex-1">City filter for structured queries</span>
-                </li>
-              </ul>
+            <p className="text-muted-foreground">
+              Free-form or structured text search against{" "}
+              <a href="https://overturemaps.org/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Overture Maps</a>{" "}
+              Places data. Converts place names or addresses into geographic coordinates without relying on Google Maps or Nominatim.
+            </p>
+
+            <div className="bg-card border border-border rounded-lg p-6 space-y-6">
+              <div>
+                <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Free-form query</h4>
+                <ul className="space-y-3 font-mono text-sm list-none p-0 m-0">
+                  <li className="flex gap-4 items-start">
+                    <span className="text-accent w-28 shrink-0">q</span>
+                    <span className="text-muted-foreground flex-1">
+                      Free-form search string. Can include any combination of name, address, city, or category
+                      (e.g. <span className="text-foreground">"Cafe Paris New York"</span>,{" "}
+                      <span className="text-foreground">"123 Main St London"</span>).
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-1">Structured query</h4>
+                <p className="text-xs text-muted-foreground/70 mb-4 font-mono">Use individual fields for precision. Filters are combined with AND.</p>
+                <ul className="space-y-3 font-mono text-sm list-none p-0 m-0">
+                  <li className="flex gap-4 items-start">
+                    <span className="text-accent w-28 shrink-0">name</span>
+                    <span className="text-muted-foreground flex-1">Place or business name (e.g. <span className="text-foreground">"Eiffel Tower"</span>)</span>
+                  </li>
+                  <li className="flex gap-4 items-start">
+                    <span className="text-accent w-28 shrink-0">city</span>
+                    <span className="text-muted-foreground flex-1">City or locality (e.g. <span className="text-foreground">"London"</span>)</span>
+                  </li>
+                  <li className="flex gap-4 items-start">
+                    <span className="text-accent w-28 shrink-0">postcode</span>
+                    <span className="text-muted-foreground flex-1">Postal or ZIP code (e.g. <span className="text-foreground">"75001"</span>, <span className="text-foreground">"SW1A 1AA"</span>)</span>
+                  </li>
+                  <li className="flex gap-4 items-start">
+                    <span className="text-accent w-28 shrink-0">type</span>
+                    <span className="text-muted-foreground flex-1">Place category (e.g. <span className="text-foreground">"cafe"</span>, <span className="text-foreground">"restaurant"</span>, <span className="text-foreground">"hotel"</span>)</span>
+                  </li>
+                  <li className="flex gap-4 items-start">
+                    <span className="text-accent w-28 shrink-0">limit</span>
+                    <span className="text-muted-foreground flex-1">Maximum number of results (1–20). Default: 5</span>
+                  </li>
+                </ul>
+              </div>
             </div>
 
             <div className="relative">

@@ -25,8 +25,10 @@ export default function Home() {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Self-Hosted.</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              The developer's toolkit for place lookup without proprietary APIs. 
-              Powered by Overture Maps and DuckDB for blazing fast spatial queries.
+              An open-source geocoding API that converts addresses into geographic coordinates
+              and performs reverse geocoding, using{" "}
+              <a href="https://overturemaps.org/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Overture Maps</a>{" "}
+              data queried through DuckDB — without relying on Google Maps or Nominatim.
             </p>
             <div className="flex items-center justify-center gap-4 pt-4">
               <Button asChild size="lg" className="h-12 px-8 font-mono text-background">

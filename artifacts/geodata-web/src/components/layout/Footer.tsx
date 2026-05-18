@@ -5,7 +5,7 @@ export function Footer() {
         <div className="flex items-center gap-2">
           <span>&copy; {new Date().getFullYear()} GeoDataPlacefinder</span>
           <span className="hidden md:inline">&middot;</span>
-          <span>Powered by Overture Maps & DuckDB</span>
+          <span>Uses <a href="https://overturemaps.org/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Overture Maps</a> data</span>
         </div>
         <div className="flex items-center gap-4">
           <a href="#" className="hover:text-primary transition-colors">Privacy</a>
