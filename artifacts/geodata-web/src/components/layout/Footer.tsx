@@ -8,8 +8,9 @@ export function Footer() {
           <span>Uses <a href="https://overturemaps.org/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Overture Maps</a> data</span>
         </div>
         <div className="flex items-center gap-4">
-          <a href="#" className="hover:text-primary transition-colors">Privacy</a>
-          <a href="#" className="hover:text-primary transition-colors">Terms</a>
+          <a href="mailto:support@geodataplacefinder.org" className="hover:text-primary transition-colors">support@geodataplacefinder.org</a>
+          <a href="https://github.com/fouomene/geodataplacefinder?tab=contributing-ov-file" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Contributing</a>
+          <a href="https://github.com/fouomene/geodataplacefinder?tab=GPL-3.0-1-ov-file" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">GPL-3.0 License</a>
         </div>
       </div>
     </footer>
