@@ -1,6 +1,6 @@
 # GeoDataPlacefinder
 
-An open-source geocoding API and demo site that converts addresses into geographic coordinates (and vice versa) using [Overture Maps](https://overturemaps.org/) data queried through [DuckDB](https://duckdb.org/) — no Google Maps or Nominatim required.
+An open-source geocoding API and demo site that converts addresses into geographic coordinates (and vice versa) using [Overture Maps](https://overturemaps.org/) data queried through [DuckDB](https://duckdb.org/).
 
 **Features**
 
