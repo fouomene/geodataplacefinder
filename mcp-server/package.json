@@ -1,0 +1,48 @@
+{
+  "name": "mcp-server-geodata-placefinder",
+  "version": "0.1.0",
+  "description": "MCP server for the GeoData Placefinder geocoding API — search places, reverse geocode, find nearest places, and look up full place details powered by Overture Maps.",
+  "license": "GPL-3.0",
+  "author": "GeoData Placefinder Contributors",
+  "homepage": "https://geodataplacefinder.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fouomene/geodataplacefinder.git",
+    "directory": "mcp-server"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "geocoding",
+    "geolocation",
+    "overture-maps",
+    "duckdb",
+    "places"
+  ],
+  "type": "module",
+  "bin": {
+    "mcp-server-geodata-placefinder": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

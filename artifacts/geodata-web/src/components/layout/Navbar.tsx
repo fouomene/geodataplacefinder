@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Map, MapPinned, Search, Book, Github } from "lucide-react";
+import { MapPinned, Book, Github, Bot } from "lucide-react";
 import { useHealthCheck } from "@workspace/api-client-react";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +27,17 @@ export function Navbar() {
           >
             <Book className="h-4 w-4" />
             Docs
+          </Link>
+          <Link
+            href="/mcp"
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary flex items-center gap-2",
+              location === "/mcp" ? "text-primary" : "text-muted-foreground"
+            )}
+            data-testid="link-nav-mcp"
+          >
+            <Bot className="h-4 w-4" />
+            MCP
           </Link>
           <a
             href="https://github.com/fouomene/geodataplacefinder"

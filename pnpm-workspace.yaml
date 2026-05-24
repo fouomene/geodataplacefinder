@@ -39,6 +39,7 @@ packages:
   - lib/*
   - lib/integrations/*
   - scripts
+  - mcp-server
 
 catalog:
   '@replit/vite-plugin-cartographer': ^0.5.1
