@@ -1,10 +1,11 @@
 {
   "name": "mcp-server-geodata-placefinder",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "MCP server for the GeoData Placefinder geocoding API — search places, reverse geocode, find nearest places, and look up full place details powered by Overture Maps.",
   "license": "GPL-3.0",
   "author": "GeoData Placefinder Contributors",
   "homepage": "https://geodataplacefinder.org",
+  "mcpName": "io.github.fouomene/mcp-server-geodata-placefinder",
   "repository": {
     "type": "git",
     "url": "https://github.com/fouomene/geodataplacefinder.git",
