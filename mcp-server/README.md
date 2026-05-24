@@ -1,6 +1,6 @@
 # mcp-server-geodata-placefinder
 
-An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that gives AI assistants (Claude, Cursor, Zed, etc.) direct access to the [GeoData Placefinder](https://geodataplacefinder.org) geocoding API, powered by [Overture Maps](https://overturemaps.org) data and DuckDB.
+An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that gives AI assistants (Claude, Cursor, Zed, etc.) direct access to the [GeoData Placefinder](https://geodataplacefinder.org) geocoding API,  [Overture Maps](https://overturemaps.org) data and DuckDB.
 
 ## Tools
 
