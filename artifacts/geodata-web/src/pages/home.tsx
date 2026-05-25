@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, MapPin, Database, Zap, Code2 } from "lucide-react";
+import { ArrowRight, MapPin, Database, Code2, Book, Bot, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ApiDemo } from "@/components/ApiDemo";
 
@@ -67,6 +67,55 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-bold font-mono">Developer First</h3>
               <p className="text-muted-foreground">Simple REST API, strongly typed schemas, and no API keys or rate limits to manage.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Navigation Cards */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold font-mono mb-8 text-center">Explore</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Link href="/docs" className="group p-6 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all space-y-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
+                  <Book className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold font-mono text-foreground group-hover:text-primary transition-colors">Docs</h3>
+                  <p className="text-sm text-muted-foreground mt-1">Full API reference, endpoint details, and curl examples.</p>
+                </div>
+                <div className="flex items-center gap-1 text-xs font-mono text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                  Read the docs <ArrowRight className="h-3 w-3" />
+                </div>
+              </Link>
+
+              <Link href="/mcp" className="group p-6 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all space-y-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
+                  <Bot className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold font-mono text-foreground group-hover:text-primary transition-colors">MCP Server</h3>
+                  <p className="text-sm text-muted-foreground mt-1">Use the geocoding API directly from Claude, Cursor, and other AI assistants.</p>
+                </div>
+                <div className="flex items-center gap-1 text-xs font-mono text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                  View MCP server <ArrowRight className="h-3 w-3" />
+                </div>
+              </Link>
+
+              <Link href="/skill" className="group p-6 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all space-y-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
+                  <Wand2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold font-mono text-foreground group-hover:text-primary transition-colors">AI Skill</h3>
+                  <p className="text-sm text-muted-foreground mt-1">A reusable skill that teaches AI agents how to query the API. Works in English and French.</p>
+                </div>
+                <div className="flex items-center gap-1 text-xs font-mono text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                  View skill <ArrowRight className="h-3 w-3" />
+                </div>
+              </Link>
             </div>
           </div>
         </div>
