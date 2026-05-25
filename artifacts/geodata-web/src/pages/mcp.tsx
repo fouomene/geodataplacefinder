@@ -103,10 +103,19 @@ export default function Mcp() {
             <h1 className="text-4xl font-bold font-mono tracking-tight">MCP Server</h1>
           </div>
           <p className="text-xl text-muted-foreground max-w-2xl">
-            The GeoData Placefinder MCP server lets AI assistants — Claude, Cursor, Zed, and any other
-            MCP-compatible client — call the geocoding API directly during a conversation.
+            The GeoData Placefinder MCP server gives AI assistants — Claude, Cursor, Zed, and any
+            MCP-compatible client — direct access to the geocoding API during a conversation.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
+            <a
+              href="https://www.npmjs.com/package/mcp-server-geodata-placefinder"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded border border-border text-sm font-mono text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+            >
+              <Package className="h-4 w-4" />
+              npm
+            </a>
             <a
               href="https://github.com/fouomene/geodataplacefinder/tree/main/mcp-server"
               target="_blank"
@@ -115,6 +124,15 @@ export default function Mcp() {
             >
               <Package className="h-4 w-4" />
               GitHub Source
+            </a>
+            <a
+              href="https://registry.modelcontextprotocol.io/?q=mcp-server-geodata-placefinder"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded border border-border text-sm font-mono text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+            >
+              <Bot className="h-4 w-4" />
+              Official MCP Registry
             </a>
           </div>
         </div>
@@ -194,7 +212,7 @@ export default function Mcp() {
         <div className="border-t border-border pt-8 space-y-3">
           <h2 className="text-xl font-bold font-mono">Source code</h2>
           <p className="text-muted-foreground">
-            The full source is maintained in the{" "}
+            Full source is in the{" "}
             <a
               href="https://github.com/fouomene/geodataplacefinder"
               target="_blank"
@@ -204,7 +222,7 @@ export default function Mcp() {
               GeoData Placefinder GitHub repository
             </a>{" "}
             under <code className="text-primary font-mono text-sm">mcp-server/</code>.
-            Contributions are welcome — see{" "}
+            Contributions welcome — see{" "}
             <a
               href="https://github.com/fouomene/geodataplacefinder?tab=contributing-ov-file"
               target="_blank"
