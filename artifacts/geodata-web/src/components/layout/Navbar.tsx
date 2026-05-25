@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { MapPinned, Book, Github, Bot, Wand2 } from "lucide-react";
+import { MapPinned, Book, Github, Bot, Wand2, Home } from "lucide-react";
 import { useHealthCheck } from "@workspace/api-client-react";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +17,17 @@ export function Navbar() {
           </span>
         </Link>
         <nav className="flex items-center gap-6">
+          <Link
+            href="/"
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary flex items-center gap-2",
+              location === "/" ? "text-primary" : "text-muted-foreground"
+            )}
+            data-testid="link-nav-home"
+          >
+            <Home className="h-4 w-4" />
+            Home
+          </Link>
           <Link
             href="/docs"
             className={cn(
