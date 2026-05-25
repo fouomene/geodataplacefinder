@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Copy, Check, Bot, Terminal, Zap, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSeo } from "@/hooks/useSeo";
 
 function CopyBlock({ id, code, copiedId, onCopy }: {
   id: string;
@@ -82,6 +83,11 @@ const npxCommand = `npx mcp-server-geodata-placefinder`;
 const npmInstall = `npm install -g mcp-server-geodata-placefinder`;
 
 export default function Mcp() {
+  useSeo({
+    title: "MCP Server — GeoData Placefinder",
+    description: "Use the GeoData Placefinder geocoding API directly from Claude, Cursor, Zed, and any MCP-compatible AI assistant. Install via npx — no API key required.",
+    canonical: "https://geodataplacefinder.org/mcp",
+  });
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const copyToClipboard = (text: string, id: string) => {

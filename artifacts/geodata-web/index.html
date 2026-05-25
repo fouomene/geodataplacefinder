@@ -6,6 +6,8 @@
 
     <title>GeoData Placefinder — Open-Source Geocoding API</title>
     <meta name="description" content="GeoData Placefinder is a free, open-source geocoding API. Convert addresses to coordinates, reverse geocode, and find nearby places — powered by Overture Maps and DuckDB. No API key required." />
+    <meta name="keywords" content="geocoding API, reverse geocoding, open-source geocoding, Overture Maps, DuckDB, place search, coordinates lookup, nearest place, free geocoding, geocoding without API key, MCP server, AI geocoding skill" />
+    <meta name="author" content="GeoData Placefinder" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://geodataplacefinder.org/" />
 
@@ -15,11 +17,63 @@
     <meta property="og:site_name" content="GeoData Placefinder" />
     <meta property="og:title" content="GeoData Placefinder — Open-Source Geocoding API" />
     <meta property="og:description" content="Free, open-source geocoding API powered by Overture Maps and DuckDB. Convert addresses to coordinates, reverse geocode, and find nearby places. No API key required." />
+    <meta property="og:image" content="https://geodataplacefinder.org/opengraph.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="GeoData Placefinder — Open-Source Geocoding API" />
     <meta name="twitter:description" content="Free, open-source geocoding API powered by Overture Maps and DuckDB. No API key required." />
+    <meta name="twitter:image" content="https://geodataplacefinder.org/opengraph.jpg" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://geodataplacefinder.org/#website",
+          "url": "https://geodataplacefinder.org/",
+          "name": "GeoData Placefinder",
+          "description": "Free, open-source geocoding API powered by Overture Maps and DuckDB.",
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://geodataplacefinder.org/#app",
+          "name": "GeoData Placefinder",
+          "url": "https://geodataplacefinder.org/",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Any",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "description": "Open-source geocoding REST API that converts addresses into geographic coordinates and performs reverse geocoding using Overture Maps data queried through DuckDB. No API key required.",
+          "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+          "codeRepository": "https://github.com/fouomene/geodataplacefinder",
+          "keywords": "geocoding, reverse geocoding, Overture Maps, DuckDB, REST API, open-source"
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://geodataplacefinder.org/#api",
+          "name": "GeoData Placefinder API",
+          "url": "https://geodataplacefinder.org/api",
+          "description": "REST API for geocoding, reverse geocoding, nearest place lookup, and full place details — powered by Overture Maps data.",
+          "documentation": "https://geodataplacefinder.org/docs",
+          "provider": {
+            "@type": "Organization",
+            "name": "GeoData Placefinder",
+            "url": "https://geodataplacefinder.org/"
+          }
+        }
+      ]
+    }
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">

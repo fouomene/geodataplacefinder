@@ -2,9 +2,15 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Terminal, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSeo } from "@/hooks/useSeo";
 
 export default function Docs() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  useSeo({
+    title: "API Reference — GeoData Placefinder",
+    description: "Full REST API documentation for GeoData Placefinder. Geocoding, reverse geocoding, nearest place lookup, and place details endpoints with curl examples.",
+    canonical: "https://geodataplacefinder.org/docs",
+  });
 
   const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text);

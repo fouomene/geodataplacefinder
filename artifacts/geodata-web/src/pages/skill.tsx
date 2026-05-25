@@ -1,4 +1,5 @@
 import { Wand2, Search, RefreshCw, MapPin, Building2, Heart, ExternalLink } from "lucide-react";
+import { useSeo } from "@/hooks/useSeo";
 
 const endpoints = [
   {
@@ -103,6 +104,11 @@ const errorTable = [
 ];
 
 export default function Skill() {
+  useSeo({
+    title: "AI Skill — GeoData Placefinder",
+    description: "A reusable AI skill that teaches agents to answer geographic questions using the GeoData Placefinder API. Supports geocoding, reverse geocoding, and place search in English and French.",
+    canonical: "https://geodataplacefinder.org/skill",
+  });
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <div className="space-y-16">

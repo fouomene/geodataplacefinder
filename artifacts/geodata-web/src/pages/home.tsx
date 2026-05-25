@@ -2,8 +2,14 @@ import { Link } from "wouter";
 import { ArrowRight, MapPin, Database, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ApiDemo } from "@/components/ApiDemo";
+import { useSeo } from "@/hooks/useSeo";
 
 export default function Home() {
+  useSeo({
+    title: "GeoData Placefinder — Open-Source Geocoding API",
+    description: "Free, open-source geocoding API powered by Overture Maps and DuckDB. Convert addresses to coordinates, reverse geocode, and find nearby places. No API key required.",
+    canonical: "https://geodataplacefinder.org/",
+  });
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
