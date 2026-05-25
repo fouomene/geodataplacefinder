@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Docs from "@/pages/docs";
 import Mcp from "@/pages/mcp";
+import Skill from "@/pages/skill";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/docs" component={Docs} />
       <Route path="/mcp" component={Mcp} />
+      <Route path="/skill" component={Skill} />
       <Route component={NotFound} />
     </Switch>
   );

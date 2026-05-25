@@ -39,16 +39,17 @@ export function Navbar() {
             <Bot className="h-4 w-4" />
             MCP
           </Link>
-          <a
-            href="https://github.com/fouomene/geodataplacefinder/blob/main/skills/geo-data-placefinder-skill/SKILL.md"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary flex items-center gap-2"
+          <Link
+            href="/skill"
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary flex items-center gap-2",
+              location === "/skill" ? "text-primary" : "text-muted-foreground"
+            )}
             data-testid="link-nav-skill"
           >
             <Wand2 className="h-4 w-4" />
             Skill
-          </a>
+          </Link>
           <a
             href="https://github.com/fouomene/geodataplacefinder"
             target="_blank"
