@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, Bot, Terminal, Zap, Package, AlertCircle } from "lucide-react";
+import { Copy, Check, Bot, Terminal, Zap, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 function CopyBlock({ id, code, copiedId, onCopy }: {
@@ -60,21 +60,7 @@ const TOOLS = [
   },
 ];
 
-const publishSteps = `# 1. Clone the repository
-git clone https://github.com/fouomene/geodataplacefinder.git
-cd geodataplacefinder/mcp-server
-
-# 2. Install dependencies and build
-npm install
-npm run build
-
-# 3. Log in to npm (one-time setup)
-npm login
-
-# 4. Publish to npm
-npm publish`;
-
-const claudeConfigNpx = `{
+const claudeConfig = `{
   "mcpServers": {
     "geodata-placefinder": {
       "command": "npx",
@@ -83,25 +69,7 @@ const claudeConfigNpx = `{
   }
 }`;
 
-const claudeConfigLocal = `{
-  "mcpServers": {
-    "geodata-placefinder": {
-      "command": "node",
-      "args": ["C:\\\\path\\\\to\\\\geodataplacefinder\\\\mcp-server\\\\dist\\\\index.js"]
-    }
-  }
-}`;
-
-const claudeConfigLocalMac = `{
-  "mcpServers": {
-    "geodata-placefinder": {
-      "command": "node",
-      "args": ["/path/to/geodataplacefinder/mcp-server/dist/index.js"]
-    }
-  }
-}`;
-
-const cursorConfigNpx = `{
+const cursorConfig = `{
   "mcpServers": {
     "geodata-placefinder": {
       "command": "npx",
@@ -109,6 +77,9 @@ const cursorConfigNpx = `{
     }
   }
 }`;
+
+const npxCommand = `npx mcp-server-geodata-placefinder`;
+const npmInstall = `npm install -g mcp-server-geodata-placefinder`;
 
 export default function Mcp() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -137,95 +108,67 @@ export default function Mcp() {
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <a
+              href="https://www.npmjs.com/package/mcp-server-geodata-placefinder"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded border border-border text-sm font-mono text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+            >
+              <Package className="h-4 w-4" />
+              npm
+            </a>
+            <a
               href="https://github.com/fouomene/geodataplacefinder/tree/main/mcp-server"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded border border-border text-sm font-mono text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
             >
               <Package className="h-4 w-4" />
-              View Source on GitHub
+              GitHub Source
             </a>
           </div>
         </div>
 
-        {/* Status notice */}
-        <div className="flex gap-3 p-4 rounded-lg border border-amber-200 bg-amber-50">
-          <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
-          <div className="space-y-1">
-            <p className="text-sm font-medium text-amber-800">Not yet published to npm</p>
-            <p className="text-sm text-amber-700">
-              The package must be published to npm before <code className="font-mono bg-amber-100 px-1 rounded">npx mcp-server-geodata-placefinder</code> works.
-              You can run it right now from the cloned source (see below), or publish it yourself using the steps in the Publishing section.
-            </p>
-          </div>
-        </div>
-
-        {/* Run from source — works now */}
+        {/* Quick install */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <Zap className="h-5 w-5 text-primary" />
-            <h2 className="text-2xl font-bold font-mono">Run from source (works now)</h2>
+            <h2 className="text-2xl font-bold font-mono">Quick start</h2>
           </div>
-          <p className="text-muted-foreground">
-            Clone the repository, build, and point your MCP client directly at the compiled file:
-          </p>
-
-          <div className="bg-card border border-border rounded-lg p-5 space-y-3">
-            <p className="text-sm font-medium text-foreground">Claude Desktop — macOS/Linux</p>
-            <CopyBlock id="claude-local-mac" code={claudeConfigLocalMac} copiedId={copiedId} onCopy={copyToClipboard} />
-            <p className="text-xs text-muted-foreground mt-1">
-              Replace <code className="font-mono text-primary">/path/to/geodataplacefinder</code> with your actual clone path.
-            </p>
-          </div>
-
-          <div className="bg-card border border-border rounded-lg p-5 space-y-3">
-            <p className="text-sm font-medium text-foreground">Claude Desktop — Windows</p>
-            <CopyBlock id="claude-local-win" code={claudeConfigLocal} copiedId={copiedId} onCopy={copyToClipboard} />
-            <p className="text-xs text-muted-foreground mt-1">
-              Replace the path with your actual clone location. Use double backslashes in JSON.
-            </p>
-          </div>
-
-          <p className="text-sm text-muted-foreground">
-            Config file location:{" "}
-            <span className="font-mono text-foreground">~/Library/Application Support/Claude/claude_desktop_config.json</span> (macOS),{" "}
-            <span className="font-mono text-foreground">%APPDATA%\Claude\claude_desktop_config.json</span> (Windows).
-          </p>
+          <p className="text-muted-foreground">No installation required — run it on-demand with npx:</p>
+          <CopyBlock id="npx" code={npxCommand} copiedId={copiedId} onCopy={copyToClipboard} />
+          <p className="text-muted-foreground text-sm">Or install globally:</p>
+          <CopyBlock id="npm" code={npmInstall} copiedId={copiedId} onCopy={copyToClipboard} />
         </div>
 
-        {/* After npm publish */}
+        {/* Claude Desktop */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <Terminal className="h-5 w-5 text-primary" />
-            <h2 className="text-2xl font-bold font-mono">After npm publish</h2>
+            <h2 className="text-2xl font-bold font-mono">Claude Desktop</h2>
           </div>
           <p className="text-muted-foreground">
-            Once the package is published to npm, any MCP client can run it without cloning the repo:
+            Add the following to your{" "}
+            <code className="text-primary font-mono text-sm">claude_desktop_config.json</code>:
           </p>
-          <div className="bg-card border border-border rounded-lg p-5 space-y-3">
-            <p className="text-sm font-medium text-foreground">Claude Desktop</p>
-            <CopyBlock id="claude-npx" code={claudeConfigNpx} copiedId={copiedId} onCopy={copyToClipboard} />
-          </div>
-          <div className="bg-card border border-border rounded-lg p-5 space-y-3">
-            <p className="text-sm font-medium text-foreground">Cursor</p>
-            <CopyBlock id="cursor-npx" code={cursorConfigNpx} copiedId={copiedId} onCopy={copyToClipboard} />
-            <p className="text-xs text-muted-foreground">Config file: <span className="font-mono text-foreground">~/.cursor/mcp.json</span></p>
+          <CopyBlock id="claude" code={claudeConfig} copiedId={copiedId} onCopy={copyToClipboard} />
+          <div className="bg-card border border-border rounded-lg p-4 space-y-2 text-sm font-mono">
+            <p className="text-muted-foreground font-sans text-sm font-medium">Config file location</p>
+            <p className="text-foreground">macOS: <span className="text-primary">~/Library/Application Support/Claude/claude_desktop_config.json</span></p>
+            <p className="text-foreground">Windows: <span className="text-primary">%APPDATA%\Claude\claude_desktop_config.json</span></p>
           </div>
         </div>
 
-        {/* Publishing to npm */}
+        {/* Cursor */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <Package className="h-5 w-5 text-primary" />
-            <h2 className="text-2xl font-bold font-mono">Publishing to npm</h2>
+            <Terminal className="h-5 w-5 text-primary" />
+            <h2 className="text-2xl font-bold font-mono">Cursor</h2>
           </div>
           <p className="text-muted-foreground">
-            You need an <a href="https://www.npmjs.com/signup" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">npm account</a> to publish. Run these commands from your local clone:
+            Add to your Cursor MCP settings at{" "}
+            <code className="text-primary font-mono text-sm">~/.cursor/mcp.json</code>:
           </p>
-          <CopyBlock id="publish" code={publishSteps} copiedId={copiedId} onCopy={copyToClipboard} />
-          <p className="text-sm text-muted-foreground">
-            After publishing, the <code className="font-mono text-primary">npx</code> command and "After npm publish" configs above will work for everyone.
-          </p>
+          <CopyBlock id="cursor" code={cursorConfig} copiedId={copiedId} onCopy={copyToClipboard} />
         </div>
 
         {/* Tools */}
